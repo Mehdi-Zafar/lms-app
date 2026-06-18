@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EduLMS - Learning Management System
+
+A full-stack Learning Management System built with Next.js 16, featuring role-based dashboards for administrators, teachers, students, and parents.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, Turbopack)
+- **Language:** TypeScript
+- **Database:** PostgreSQL with Prisma 7 ORM
+- **Authentication:** NextAuth v5 (Credentials provider, JWT sessions)
+- **Styling:** Tailwind CSS 4
+- **Runtime:** Edge-compatible middleware for route protection
+
+## Features
+
+### Admin Dashboard
+- User management (create, delete, role assignment)
+- Course overview and management
+- Student enrollment and removal
+- Grade overrides
+- Parent-child linking
+
+### Teacher Dashboard
+- Course creation and publishing
+- Module, lesson, and assignment management
+- Submission grading with feedback
+- Attendance logging
+- Student progress report generation
+
+### Student Dashboard
+- Course browsing and enrollment
+- Assignment viewing and file submission
+- Grade tracking
+- File upload for coursework
+
+### Parent Dashboard
+- View linked children's grades
+- Attendance records
+- Progress reports from teachers
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- PostgreSQL database
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Mehdi-Zafar/lms-app.git
+   cd lms-app
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Configure environment variables:
+
+   Create a `.env` file in the project root:
+
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/lms"
+   AUTH_SECRET="your-auth-secret"
+   ```
+
+4. Push the database schema and seed demo data:
+
+   ```bash
+   npm run db:push
+   npm run db:seed
+   ```
+
+5. Generate the Prisma client:
+
+   ```bash
+   npx prisma generate
+   ```
+
+6. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Demo Accounts
+
+| Role    | Email               | Password    |
+|---------|---------------------|-------------|
+| Admin   | admin@school.edu    | password123 |
+| Teacher | teacher@school.edu  | password123 |
+| Student | student@school.edu  | password123 |
+| Parent  | parent@school.edu   | password123 |
+
+## Project Structure
+
+```
+src/
+├── actions/           # Server actions (admin, teacher, student)
+├── app/
+│   ├── (dashboard)/   # Role-based dashboard routes
+│   │   ├── admin/
+│   │   ├── teacher/
+│   │   ├── student/
+│   │   └── parent/
+│   ├── api/auth/      # NextAuth API route
+│   └── login/         # Login page
+├── components/
+│   ├── dashboard/     # Dashboard layout components
+│   └── ui/            # Reusable UI components
+├── lib/
+│   ├── auth.ts        # NextAuth configuration (server-side)
+│   ├── auth.config.ts # Edge-compatible auth config
+│   ├── auth-guard.ts  # Route protection helpers
+│   ├── db.ts          # Prisma client
+│   └── rbac.ts        # Role-based access control
+└── types/             # TypeScript type declarations
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command          | Description                              |
+|------------------|------------------------------------------|
+| `npm run dev`    | Start development server with Turbopack  |
+| `npm run build`  | Create production build                  |
+| `npm run start`  | Start production server                  |
+| `npm run lint`   | Run ESLint                               |
+| `npm run db:push`| Push Prisma schema to database           |
+| `npm run db:seed`| Seed database with demo data             |
+| `npm run db:reset`| Reset database and re-seed              |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is private and not licensed for public distribution.
