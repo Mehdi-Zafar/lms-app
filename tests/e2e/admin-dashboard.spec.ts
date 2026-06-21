@@ -7,7 +7,7 @@ test.describe("Admin Dashboard", () => {
   });
 
   test("displays dashboard stats", async ({ page }) => {
-    await expect(page.getByText("Dashboard")).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Dashboard/ })).toBeVisible();
   });
 
   test("can navigate to users page", async ({ page }) => {
@@ -28,11 +28,12 @@ test.describe("Admin Dashboard", () => {
 
   test("can create a new user", async ({ page }) => {
     await page.getByRole("link", { name: "Users" }).click();
-    await page.getByLabel("Name").fill("E2E Test User");
-    await page.getByLabel("Email").fill(`e2e-${Date.now()}@test.edu`);
+    await expect(page.getByText("User Management")).toBeVisible();
+    await page.getByLabel("Full Name").fill("E2E Test User");
+    await page.getByLabel("Email", { exact: true }).fill(`e2e-${Date.now()}@test.edu`);
     await page.getByLabel("Password").fill("password123");
     await page.getByLabel("Role").selectOption("STUDENT");
     await page.getByRole("button", { name: "Create User" }).click();
-    await expect(page.getByText("E2E Test User")).toBeVisible();
+    await expect(page.getByText("User created successfully!")).toBeVisible({ timeout: 10000 });
   });
 });

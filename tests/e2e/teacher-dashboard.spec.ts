@@ -7,7 +7,7 @@ test.describe("Teacher Dashboard", () => {
   });
 
   test("displays teacher dashboard", async ({ page }) => {
-    await expect(page.getByText("Dashboard")).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Dashboard/ })).toBeVisible();
   });
 
   test("can navigate to courses page", async ({ page }) => {

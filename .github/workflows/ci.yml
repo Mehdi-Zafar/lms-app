@@ -9,6 +9,7 @@ on:
 env:
   DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lms_test
   AUTH_SECRET: test-secret-key
+  AUTH_TRUST_HOST: true
 
 jobs:
   lint:
@@ -46,7 +47,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx prisma generate
-      - run: npx prisma db push --skip-generate
+      - run: npx prisma db push
       - run: npm run test:unit:coverage
 
   e2e-test:
@@ -74,7 +75,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx prisma generate
-      - run: npx prisma db push --skip-generate
+      - run: npx prisma db push
       - run: npx tsx prisma/seed.mts
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
